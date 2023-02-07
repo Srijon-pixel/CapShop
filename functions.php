@@ -46,4 +46,20 @@ function getAllCaps()
 	return $arr;
 }
 
+function deleteCap($idCap)
+{
 
+	$sql = "DELETE FROM `db_caps`.`caps` WHERE `caps`.`id_cap` = :c";
+	$statement = EDatabase::prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+	try {
+		$statement->execute(array(":c" => $idCap));
+	} catch (PDOException $e) {
+		return false;
+	}
+	// Done
+	return true;
+}
+
+function modifyCap(){
+	
+}

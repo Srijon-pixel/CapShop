@@ -5,7 +5,32 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="./css/base.css">
+    <style>
+        .card {
+            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
+            transition: 0.3s;
+            width: 12%;
+            background-color: white;
+            border-radius: 5px;
+            margin: 1%;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
+        }
+
+        .container {
+            padding: 2px 16px;
+        }
+
+        img {
+            border-radius: 5px 5px 0 0;
+
+        }
+        main{
+            flex-wrap: wrap;
+        }
+    </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <title>Accueil</title>
 </head>
@@ -34,7 +59,7 @@
 
     $records = getAllCaps();
     if ($records === false) {
-        echo "Les casquettes ne peuvent être affichés. Une erreur s'est produite.";
+        echo "Les casquettes ne peuvent être affichées. Une erreur s'est produite.";
         exit;
     }
     ?>
@@ -57,17 +82,18 @@
 
         <form action="./product.php" method="POST">
             <input type="submit" value="Voir la boutique" class="btn btn-primary">
-        </form><br>
-        <label for="tri">Filtre: </label><br />
+        </form>
+        <br />
+        <label for="tri">Filtre: </label><br>
         <select name="tri">
             <option value="Date" <?= GetSelectedValueByName($filter, 'tri')['filter'] == 'Date' ? 'selected' : '' ?>>Date</option>
             <option value="PrixDesc" <?= GetSelectedValueByName($filter, 'tri')['filter'] == 'PrixDesc' ? 'selected' : '' ?>>Prix ></option>
             <option value="PrixAsc" <?= GetSelectedValueByName($filter, 'tri')['filter'] == 'PrixAsc' ? 'selected' : '' ?>>Prix < </option>
             <option value="Marque" <?= GetSelectedValueByName($filter, 'tri')['filter'] == 'Marque' ? 'selected' : '' ?>>Marque</option>
             <option value="Favoris" <?= GetSelectedValueByName($filter, 'tri')['filter'] == 'Favoris' ? 'selected' : '' ?>>Favoris</option>
-        </select><br />
+        </select><br>
         <div class="search-container">
-            <form action="/action_page.php">
+            <form action="./index.php">
                 <label for="search"> Rechercher</label><br>
                 <input type="text" placeholder="Search..." name="search">
                 <button type="submit"><i>Rechercher</i></button>
