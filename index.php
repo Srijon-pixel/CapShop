@@ -37,6 +37,7 @@
 
 <body>
     <?php
+    session_start();
     require_once './functions.php';
 
     $tri = filter_input(INPUT_POST, 'tri');
