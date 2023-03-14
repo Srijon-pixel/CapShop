@@ -5,32 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .card {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
-            width: 12%;
-            background-color: white;
-            border-radius: 5px;
-            margin: 1%;
-        }
+    <link rel="stylesheet" href="./css/base.css">
 
-        .card:hover {
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        .container {
-            padding: 2px 16px;
-        }
-
-        img {
-            border-radius: 5px 5px 0 0;
-
-        }
-        main{
-            flex-wrap: wrap;
-        }
-    </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <title>Modifier la casquette</title>
 </head>
@@ -71,7 +47,7 @@
             $colNomMarque = COL_ERROR;
         }
         $price = filter_input(INPUT_POST, 'price', FILTER_VALIDATE_FLOAT);
-        if ($price == false) {
+        if ($price == false || $price < 0) {
             $colPrice = COL_ERROR;
         }
         $description = filter_input(INPUT_POST, 'description');
@@ -79,11 +55,11 @@
             $colDescription = COL_ERROR;
         }
         $quantity = filter_input(INPUT_POST, 'quantity', FILTER_SANITIZE_NUMBER_INT);
-        if ($quantity == false) {
+        if (intval($quantity) == false || $quantity < 0) {
             $colQuantity = COL_ERROR;
         }
         if ($colNomModel != COL_ERROR && $colNomMarque != COL_ERROR && $colPrice != COL_ERROR && $colDescription != COL_ERROR && $colQuantity != COL_ERROR) {
-            if (modifyCap($idModify, $nameModel, $nameMarque, $price, $description, $quantity)) {
+            if (modifyCap($idModify, $nomModel, $nomMarque, $price, $description, intval($quantity))) {
                 header('Location: index.php');
                 exit;
             }
@@ -92,11 +68,7 @@
         }
     }
 
-    $records = getAllCaps();
-    if ($records === false) {
-        echo "Les casquettes ne peuvent être affichées. Une erreur s'est produite.";
-        exit;
-    }
+ 
 
     ?>
      <header>
@@ -109,7 +81,11 @@
                     <li class="nav-item"><a class="nav-link" href="./index.php">Accueil</a></li>
                     <li class="nav-item"><a class="nav-link" href="./product.php"> Produits </a></li>
                     <li class="nav-item"><a class="nav-link" href="./profil.php">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./commande.php">Commande</a></li>
                     <li class="nav-item"><a class="nav-link" href="./panier.php">Panier</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./facture.php">Facture</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./inscription.php">Inscription</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./login.php">Connexion</a></li>
                 </ul>
             </div>
         </nav>
@@ -163,6 +139,10 @@
                 </p>
         </form>
     </main>
+    <footer>
+        &copy;Fait par Mofassel Haque Srijon Rahman <br>
+        Contact : srijon.rhmn@eduge.ch
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>
 

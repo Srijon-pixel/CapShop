@@ -8,13 +8,48 @@
     <link rel="stylesheet" href="./css/base.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <title>Facture</title>
+    <title>Connexion</title>
 </head>
 
 <body>
     <?php
     session_start();
     require_once './functions.php';
+
+    //variables
+    const COL_ERROR = "red";
+
+    $email = "";
+    $password = "";
+
+    $colEmail = "";
+    $colPassword = "";
+
+    if (isset($_POST['connexion'])) {
+
+       
+
+        $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
+        if ($email == false) {
+            $colEmail = COL_ERROR;
+        }
+
+        $password = filter_input(INPUT_POST, 'password');
+        if ($password == false) {
+            $colPassword = COL_ERROR;
+        }
+
+        if ($colPassword != COL_ERROR && $colEmail != COL_ERROR) {
+            if(CheckUserExistInDB($email,$password)){
+                $_SESSION['idUser'] = getUserId($email);
+                header("location: profil.php");
+                exit();
+            }
+        } else {
+            echo '<script>alert("Pas possible il vous manque des valeurs ou des valeurs sont fausses")</script>';
+        }
+    }
+
 
     ?>
     <header>
@@ -29,10 +64,9 @@
                     <li class="nav-item"><a class="nav-link" href="./profil.php">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="./commande.php">Commande</a></li>
                     <li class="nav-item"><a class="nav-link" href="./panier.php">Panier</a></li>
-                    <li class="nav-item"><a class="nav-link active" href="#">Facture</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./facture.php">Facture</a></li>
                     <li class="nav-item"><a class="nav-link" href="./inscription.php">Inscription</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./login.php">Connexion</a></li>
-
+                    <li class="nav-item"><a class="nav-link active" href="#">Connexion</a></li>
 
                 </ul>
             </div>
@@ -40,7 +74,23 @@
     </header>
     <main>
 
- 
+
+
+
+
+        <form action="#" method="POST">
+            <label for="email">Email:</label><br>
+            <input type="text" name="email" value="<?php echo $email;?>"><br>
+            <label for="password">Mot de passe : </label><br>
+            <input type="text" name="password" value="<?php echo $password;?>"><br>
+            <input type="submit" name="connexion" value="Se connecter" class="btn btn-primary"><br>
+            <a href="./inscription.php">Pas de compte ?</a>
+        </form>
+        <?php
+
+
+        ?>
+
     </main>
     <footer>
         &copy;Fait par Mofassel Haque Srijon Rahman <br>

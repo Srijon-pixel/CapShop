@@ -5,32 +5,8 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <style>
-        .card {
-            box-shadow: 0 4px 8px 0 rgba(0, 0, 0, 0.2);
-            transition: 0.3s;
-            width: 12%;
-            background-color: white;
-            border-radius: 5px;
-            margin: 1%;
-        }
+    <link rel="stylesheet" href="./css/base.css">
 
-        .card:hover {
-            box-shadow: 0 8px 16px 0 rgba(0, 0, 0, 0.2);
-        }
-
-        .container {
-            padding: 2px 16px;
-        }
-
-        img {
-            border-radius: 5px 5px 0 0;
-
-        }
-        main{
-            flex-wrap: wrap;
-        }
-    </style>
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
     <title>Accueil</title>
 </head>
@@ -40,23 +16,6 @@
     session_start();
     require_once './functions.php';
 
-    $tri = filter_input(INPUT_POST, 'tri');
-    $filter = array();
-    if ((isset($_POST['filter']))) {
-        if ($tri == 'Date' || $tri == 'PrixDesc' || $tri == 'PrixAsc' || $tri == 'Marque' || $tri == 'Favoris') {
-            array_push($filter, ['name' => 'tri', 'filter' => $tri]);
-        }
-    }
-
-    function GetSelectedValueByName($filter, $name)
-    {
-        foreach ($filter as $value) {
-            if ($value['name'] == $name) {
-                return $value;
-            }
-        }
-        return false;
-    }
 
     $records = getAllCaps();
     if ($records === false) {
@@ -74,7 +33,12 @@
                     <li class="nav-item"><a class="nav-link active" href="#">Accueil</a></li>
                     <li class="nav-item"><a class="nav-link" href="./product.php">Produits</a></li>
                     <li class="nav-item"><a class="nav-link" href="./profil.php">Profil</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./commande.php">Commande</a></li>
                     <li class="nav-item"><a class="nav-link" href="./panier.php">Panier</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./facture.php">Facture</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./inscription.php">Inscription</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./login.php">Connexion</a></li>
+
                 </ul>
             </div>
         </nav>
@@ -87,11 +51,11 @@
         <br />
         <label for="tri">Filtre: </label><br>
         <select name="tri">
-            <option value="Date" <?= GetSelectedValueByName($filter, 'tri')['filter'] == 'Date' ? 'selected' : '' ?>>Date</option>
-            <option value="PrixDesc" <?= GetSelectedValueByName($filter, 'tri')['filter'] == 'PrixDesc' ? 'selected' : '' ?>>Prix ></option>
-            <option value="PrixAsc" <?= GetSelectedValueByName($filter, 'tri')['filter'] == 'PrixAsc' ? 'selected' : '' ?>>Prix < </option>
-            <option value="Marque" <?= GetSelectedValueByName($filter, 'tri')['filter'] == 'Marque' ? 'selected' : '' ?>>Marque</option>
-            <option value="Favoris" <?= GetSelectedValueByName($filter, 'tri')['filter'] == 'Favoris' ? 'selected' : '' ?>>Favoris</option>
+            <option value="Date">Date</option>
+            <option value="PrixDesc">Prix </option>
+            <option value="PrixAsc">Prix  </option>
+            <option value="Marque">Marque</option>
+            <option value="Favoris">Favoris</option>
         </select><br>
         <div class="search-container">
             <form action="./index.php">
@@ -112,21 +76,24 @@
             echo $cap->nomMarque;
             echo '</b></h4>';
             if ($cap->quantity >= 11) {
-                echo "<p style='color: green'>Disponible</p>";
+                echo "<p style='color: green'>$cap->quantity disponibles</p>";
             } else if ($cap->quantity < 11 && $cap->quantity > 0) {
                 echo "<p style='color: orange'>$cap->quantity restantes</p>";
             } else {
                 echo "<p style='color: red'>Rupture de stock</p>";
             }
             echo "<p>";
-            echo $cap->price . ".-";
+            echo $cap->price . " .-";
             echo '</p>';
             echo "</div>";
             echo "</div>";
         }
         ?>
     </main>
-    <footer></footer>
+    <footer>
+        &copy;Fait par Mofassel Haque Srijon Rahman <br>
+        Contact : srijon.rhmn@eduge.ch
+    </footer>
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/js/bootstrap.bundle.min.js" integrity="sha384-u1OknCvxWvY5kfmNBILK2hRnQC3Pr17a+RTT6rIHI7NnikvbZlHgTPOOmMi466C8" crossorigin="anonymous"></script>
 </body>
 

@@ -20,7 +20,13 @@ img {
 
 }
 
-main {
-    display: flex;
-    flex-wrap: wrap;
+
+footer {
+    color: white;
+    background-color: rgba(49, 49, 49, 0.801);
+    position: fixed;
+    left: 0;
+    bottom: 0;
+    width: 100%;
+    text-align: center;
 }

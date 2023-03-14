@@ -12,7 +12,7 @@ class ECap
      * @param string $InNom le nom du budget
      * @param integer $InMontant le montant du budget
      */
-    public function __construct($InIdCap, $InIdModel, $InPrice = 0, $InIdDescription = "", $InQuantity = 0, $InNomModel, $InNomMarque)
+    public function __construct($InIdCap, $InIdModel, $InPrice, $InIdDescription, $InQuantity, $InNomModel, $InNomMarque, $InActive)
     {
        
         $this->id_cap = $InIdCap;
@@ -22,6 +22,7 @@ class ECap
         $this->quantity = $InQuantity;
         $this->nomModel = $InNomModel;
         $this->nomMarque = $InNomMarque;
+        $this->active = $InActive;
 
     }
 
@@ -43,6 +44,7 @@ class ECap
     public $quantity;
     public $nomModel;
     public $nomMarque;
- 
+    public $active;
 
 }
+?>
