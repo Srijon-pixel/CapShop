@@ -22,44 +22,36 @@
         exit;
     }
 
-    $tabCap = array();
-    foreach ($records as $cap) {
-        array_push($tabCap, array(
-            "id" => "",
-            "quantityUser" => "",
-            "price" => $cap->price
-        ));
-    }
+    $idUser = $_SESSION['idUser'];
+
+
+    define('CAP', 'cap');
+    define('QUANTITY', 'quantity');
+
 
 
     //Test si les données des champs seront modifiés dans la BD ou pas
     if (isset($_POST['add'])) {
+        $commandIsValid = false;
+        $idOrder = addOrder($idUser);
+        if (isset($_POST[CAP]) || is_array($_POST[CAP])) {
+            foreach ($_POST[CAP] as $idCap => $cap) {
 
-        $tabIdCap = $_POST['cap'];
-        $tabQuantity = $_POST['quantityUser'];
-        $tabCap[0]["id"] = filter_input(INPUT_POST, 'cap[0]');
-        print_r($tabCap);
-
-        $quantity = filter_input(INPUT_POST, 'quantityUser[]', FILTER_SANITIZE_NUMBER_INT);
-
-        /*if (intval($quantity) == false || $quantity < 0) {
-            $colQuantity = COL_ERROR;
-        }
-        if ($price == false || $price < 0) {
-            $colPrice = COL_ERROR;
-        }
-
-
-
-
-        if ($colPrice != COL_ERROR && $colQuantity != COL_ERROR) {
-            if (addOrderCaps($idCap, $price, intval($quantity))) {
-                header('Location: panier.php');
-                exit;
+                $capQuantity = filter_var($cap[QUANTITY], FILTER_SANITIZE_NUMBER_INT);
+                if ($capQuantity > 0) {
+                    if (addOrderCaps(intval($idOrder), $idCap, intval($capQuantity))) {
+                        $commandIsValid = true;
+                    }
+                    if ($commandIsValid) {
+                        header('Location: panier.php');
+                        exit;
+                    } else {
+                        echo '<script>alert("Pas possible il vous manque des valeurs ou des valeurs sont fausses")</script>';
+                    }
+                }
             }
-        } else {
-            echo '<script>alert("Pas possible il vous manque des valeurs ou des valeurs sont fausses")</script>';
-        }*/
+          
+        }
     }
 
 
@@ -85,6 +77,7 @@
         </nav>
     </header>
     <main>
+
         <form action="#" method="post">
             <?php
 
@@ -92,7 +85,7 @@
                 echo "<div class=\"card\">";
                 echo "<div class=\"container\">";
                 echo "<img src=\"./img/cap_default.jpg\" alt=\"cap_default\" style=\"width:100%\">";
-                echo "<input type=\"hidden\" name=\"cap[]\" value=" . $cap->id_cap . ">";
+                echo "<input type=\"hidden\" name=\"" . CAP . "[" . $cap->id_cap . "]\" value=" . $cap->id_cap . ">";
                 echo "<h4><b>";
                 echo $cap->nomModel;
                 echo "<br>";
@@ -105,7 +98,7 @@
                 } else {
                     echo "<p style='color: red'>Rupture de stock</p>";
                 }
-                echo "<input type=\"number\" max=\"$cap->quantity\" min=0 value = 0 name=\"quantityUser[quantity]\"><br>";
+                echo "<input type=\"number\" max=\"$cap->quantity\" min=0 value = 0 name=\"" . CAP . "[" . $cap->id_cap . "][" . QUANTITY . "]\" ><br>";
                 echo "<p>";
                 echo "<p>CHF $cap->price</p>";
                 echo '</p>';

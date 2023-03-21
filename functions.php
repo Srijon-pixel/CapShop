@@ -279,16 +279,42 @@ function CheckUserExistInDB($emailUser, $passwordUser)
 /*************************************************************************************************************** */
 /*************************************************************************************************************** */
 
-function addOrderCaps($idCap, $quantity, $unitPrice)
+function addOrder($idUser)
 {
-	$sql = "INSERT INTO `db_caps`.`order_caps` (id_cap, quantity, unit_price) 
-	VALUES(:ic, :q, :u)";
+	$sql = "INSERT INTO `db_caps`.`orders` (is_confirmed, order_date, id_user) 
+	VALUES(0, null, :iu)";
 
 	$statement = EDatabase::prepare($sql, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
 	try {
 		$statement->execute(array(
-			":ic" => $idCap, ":q" => $quantity, ":u" => $unitPrice
+			":iu" => $idUser
 		));
+	} catch (PDOException $e) {
+		return false;
+	}
+	// Retourne l'identifiant de la commande ajouté
+	return EDatabase::lastInsertId();
+}
+
+function addOrderCaps($idOrder, $idCap, $quantity)
+{
+	$sqlOrderCap = "INSERT INTO `order_caps`(`id_order`, `id_cap`, `quantity`, `unit_price`)";
+	$price_sql = "SELECT price FROM caps WHERE caps.id_cap = ".$idCap.";";
+	$price = EDatabase::exec($price_sql);
+	echo $price;
+	//$statementOrderCap->execute($price_sql);
+
+	//$statementOrderCap = EDatabase::prepare($sqlOrderCap, array(PDO::ATTR_CURSOR => PDO::CURSOR_FWDONLY));
+	try {
+		$sql = "INSERT INTO order_caps (id_order_caps, id_order, id_cap, quantity, unit_price) VALUES (NULL, ".$idOrder.", ".$idCap.", ".$quantity.", ".$price.");";
+		EDatabase::prepare($sql, array(PDO::MYSQL_ATTR_USE_BUFFERED_QUERY => true));
+		EDatabase::exec($sql);
+		/*
+			$statementOrderCap->execute(
+				$sql
+				//array(":io" => $idOrder, ":ic" => $idCap, ":q" => $quantity, ":u" => $unitPrice)
+			);
+		*/
 	} catch (PDOException $e) {
 		return false;
 	}
@@ -315,7 +341,6 @@ function getAllOrder()
 		$c = new EOrder(
 			intval($row['id_order']),
 			$row['is_confirmed'],
-			$row['total_price'],
 			$row['order_date'],
 			$row['id_user']
 		);

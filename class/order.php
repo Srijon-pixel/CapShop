@@ -12,12 +12,11 @@ class EOrder
      * @param string $InNom le nom du budget
      * @param integer $InMontant le montant du budget
      */
-    public function __construct($InIdOrder, $InIsConfirmed, $InTotalPrice, $InOrderDate, $InIdUser)
+    public function __construct($InIdOrder, $InIsConfirmed, $InOrderDate, $InIdUser)
     {
 
         $this->id_order = $InIdOrder;
         $this->is_confirmed = $InIsConfirmed;
-        $this->total_price = $InTotalPrice;
         $this->order_date = $InOrderDate;
         $this->id_user = $InIdUser;
     }
@@ -32,10 +31,6 @@ class EOrder
      * @var string nom du budget
      */
     public $is_confirmed;
-    /**
-     * @var double montant de la transaction
-     */
-    public $total_price;
     /**
      * @var double montant de la transaction
      */
