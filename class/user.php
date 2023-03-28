@@ -1,16 +1,19 @@
 <?php
 
 /**
- * Classe container budget
+ * Classe container user
  */
 class EUser
 {
 
     /**
-     * Constructeur permettant de créer un nouveau budget
-     * @param integer $InIdBudget L'identifiant du budget
-     * @param string $InNom le nom du budget
-     * @param integer $InMontant le montant du budget
+     * Constructeur permettant de créer un nouveau compte utilisateur
+     * @param integer $InIdUser L'identifiant de l'utilisateur
+     * @param string $InUsername le nom de l'utilisateur
+     * @param string $InEmail l'email de l'utilisateur
+     * @param string $InPassword le mot de passe de l'utilisateur
+     * @param bool $InActif Indique si le compte existe ou non
+     * @param integer $InAdmin l'identifiant de l'administrateur
      */
     public function __construct($InIdUser, $InUsername, $InEmail, $InPassword, $InActif, $InAdmin)
     {
@@ -30,24 +33,24 @@ class EUser
      */
     public $id_user;
     /**
-     * @var string nom du budget
+     * @var string nom de l'utilisateur
      */
     public $username;
     /**
-     * @var double montant de la transaction
+     * @var string email de l'utilisateur
      */
     public $email;
     /**
-     * @var double montant de la transaction
+     * @var string mot de passe de l'utilisateur
      */
     public $password;
 
     /**
-     * @var double montant de la transaction
+     * @var bool indique l'existance du compte
      */
     public $actif;
     /**
-     * @var double montant de la transaction
+     * @var integer identifiant de l'administrateur
      */
     public $admin;
 }

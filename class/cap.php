@@ -1,16 +1,21 @@
 <?php
 
 /**
- * Classe container budget
+ * Classe container cap
  */
 class ECap
 {
 
     /**
-     * Constructeur permettant de créer un nouveau budget
-     * @param integer $InIdBudget L'identifiant du budget
-     * @param string $InNom le nom du budget
-     * @param integer $InMontant le montant du budget
+     * Constructeur permettant de créer une nouvelle casquette avec les valeur en paramètres :
+     * @param integer $InIdCap L'identifiant de la casquette
+     * @param integer $InIdModel L'identifiant du modèle de la casquette
+     * @param double $InPrice Le prix de la casquette
+     * @param string $InIdDescription La description de la casquette
+     * @param integer $InQuantity Indique la quantité de casquette que l'on possède dans la base de donnée
+     * @param string $InNomModel Le modèle de la casquette
+     * @param string $InNomMarque La marque de la casquette
+     * @param bool $InActive Indique si la casquette existe ou non aux yeux des utilisateurs
      */
     public function __construct($InIdCap, $InIdModel, $InPrice, $InIdDescription, $InQuantity, $InNomModel, $InNomMarque, $InActive)
     {
@@ -29,21 +34,43 @@ class ECap
 
 
     /**
-     * @var integer L'identifiant du budget
+     * @var integer identifiant de la casquette
      */
     public $id_cap;
+
     /**
-     * @var string nom du budget
+     * @var integer identifiant du modèle de la casquette
      */
     public $id_model;
+
     /**
-     * @var double montant de la transaction
+     * @var double montant de la casquette
      */
     public $price;
+
+    /**
+     * @var string description de la casquette
+     */
     public $description;
+
+    /**
+     * @var int quantité de casquette que l'on possède dans la base de donnée
+     */
     public $quantity;
+
+    /**
+     * @var string modèle de la casquette
+     */
     public $nomModel;
+
+    /**
+     * @var string marque de la casquette
+     */
     public $nomMarque;
+
+    /**
+     * @var bool indique si la casquette existe ou non aux yeux des utilisateurs
+     */
     public $active;
 
 }

@@ -33,7 +33,7 @@
 
 
     //Test si les données des champs seront modifiés dans la BD ou pas
-    if (isset($_POST['update'])) {
+    if (isset($_POST['add'])) {
 
         $nomModel = filter_input(INPUT_POST, 'nomModel');
         if ($nomModel == false) {
@@ -80,7 +80,6 @@
                     <li class="nav-item"><a class="nav-link" href="./product.php"> Produits </a></li>
                     <li class="nav-item"><a class="nav-link" href="./commande.php">Commande</a></li>
                     <li class="nav-item"><a class="nav-link" href="./profil.php">Profile</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./panier.php">Panier</a></li>
                     <li class="nav-item"><a class="nav-link" href="./facture.php">Facture</a></li>
                     <li class="nav-item"><a class="nav-link" href="./inscription.php">Inscription</a></li>
                     <li class="nav-item"><a class="nav-link" href="./login.php">Connexion</a></li>
@@ -133,7 +132,7 @@
                     </div>
                 </div>
                 <p>
-                    <input type="submit" name="update" value="Modifer la casquette" class="btn btn-primary">
+                    <input type="submit" name="add" value="Ajouter la casquette" class="btn btn-primary">
                 </p>
         </form>
     </main>

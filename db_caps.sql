@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Hôte : localhost:3306
--- Généré le : mar. 14 mars 2023 à 08:38
+-- Généré le : mar. 28 mars 2023 à 14:50
 -- Version du serveur : 8.0.30
 -- Version de PHP : 8.1.10
 
@@ -37,7 +37,7 @@ CREATE TABLE `brands` (
 --
 
 INSERT INTO `brands` (`id_brand`, `name`) VALUES
-(1, 'Basket2'),
+(1, 'sdgf'),
 (2, 'nma'),
 (3, 'Calvin Klein'),
 (4, 'Tommy hilfiger'),
@@ -75,7 +75,7 @@ INSERT INTO `caps` (`id_cap`, `id_model`, `price`, `description`, `quantity`, `a
 (7, 6, 40.00, 'Burning on the road with this famous cap.', 71, 0),
 (8, 7, 2.00, 'Used by the famous formula 1 driver, thomas smith.', 3, 0),
 (9, 8, 35.00, 'Nope.', 18, 0),
-(10, 9, 0.30, '0.3', 6, 1),
+(10, 9, 44.05, '44.05', 7, 1),
 (11, 10, 50.00, 'Underground and Techwear.', 4, 0),
 (12, 11, 45.50, 'M I N I M A L I S T E', 11, 1);
 
@@ -128,7 +128,7 @@ INSERT INTO `models` (`id_model`, `name`, `id_brand`) VALUES
 (6, 'Fast car', 5),
 (7, 'Racing', 4),
 (8, 'Nope.', 3),
-(9, 'BASKET', 1),
+(9, 'sdfg', 1),
 (10, 'Metropolitan', 3),
 (11, 'Minimaliste', 4);
 
@@ -141,7 +141,6 @@ INSERT INTO `models` (`id_model`, `name`, `id_brand`) VALUES
 CREATE TABLE `orders` (
   `id_order` int NOT NULL,
   `is_confirmed` tinyint DEFAULT '0',
-  `total_price` decimal(10,2) DEFAULT NULL,
   `order_date` date DEFAULT NULL,
   `id_user` int DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
@@ -150,19 +149,58 @@ CREATE TABLE `orders` (
 -- Déchargement des données de la table `orders`
 --
 
-INSERT INTO `orders` (`id_order`, `is_confirmed`, `total_price`, `order_date`, `id_user`) VALUES
-(1, 0, 240.00, '2021-05-10', 1),
-(2, 1, 89.49, '2021-05-11', 1),
-(4, 0, 150.00, '2021-05-11', 2),
-(5, 0, 50.00, '2021-05-12', 2),
-(6, 1, 410.00, '2021-05-12', 1),
-(7, 1, 150.00, '2021-05-12', 2),
-(8, 0, 50.00, '2021-05-12', 2),
-(9, 1, 252.50, '2021-05-12', 1),
-(12, 0, 50.00, '2021-05-12', 2),
-(14, 0, 45.50, '2021-05-19', 3),
-(15, 0, 85.00, '2021-05-19', 3),
-(16, 0, 47.50, '2021-05-19', 2);
+INSERT INTO `orders` (`id_order`, `is_confirmed`, `order_date`, `id_user`) VALUES
+(1, 0, '2021-05-10', 1),
+(2, 1, '2021-05-11', 1),
+(4, 0, '2021-05-11', 2),
+(5, 0, '2021-05-12', 2),
+(6, 1, '2021-05-12', 1),
+(7, 1, '2021-05-12', 2),
+(8, 0, '2021-05-12', 2),
+(9, 1, '2021-05-12', 1),
+(12, 0, '2021-05-12', 2),
+(14, 0, '2021-05-19', 3),
+(15, 0, '2021-05-19', 3),
+(16, 0, '2021-05-19', 2),
+(17, 0, NULL, 15),
+(18, 0, NULL, 15),
+(19, 0, NULL, 15),
+(20, 0, NULL, 15),
+(21, 0, NULL, 15),
+(22, 0, NULL, 15),
+(23, 0, NULL, 15),
+(24, 0, NULL, 15),
+(25, 0, NULL, 15),
+(26, 0, NULL, 15),
+(27, 0, NULL, 15),
+(28, 0, NULL, 15),
+(29, 0, NULL, 15),
+(30, 0, NULL, 15),
+(31, 0, NULL, 15),
+(32, 0, NULL, 15),
+(33, 0, NULL, 15),
+(34, 0, '2023-03-28', 16),
+(35, 0, '2023-03-28', 16),
+(36, 0, '2023-03-28', 16),
+(37, 0, '2023-03-28', 16),
+(38, 0, '2023-03-28', 16),
+(39, 0, '2023-03-28', 16),
+(40, 0, '2023-03-28', 16),
+(41, 0, '2023-03-28', 16),
+(42, 0, '2023-03-28', 16),
+(43, 0, '2023-03-28', 16),
+(44, 0, '2023-03-28', 16),
+(45, 0, '2023-03-28', 16),
+(46, 0, '2023-03-28', 16),
+(47, 0, '2023-03-28', 16),
+(48, 0, '2023-03-28', 16),
+(49, 0, '2023-03-28', 16),
+(50, 0, '2023-03-28', 16),
+(51, 0, '2023-03-28', 16),
+(52, 1, '2023-03-28', 16),
+(53, 0, '2023-03-28', 16),
+(54, 0, '2023-03-28', 16),
+(55, 0, '2023-03-28', 16);
 
 -- --------------------------------------------------------
 
@@ -172,10 +210,10 @@ INSERT INTO `orders` (`id_order`, `is_confirmed`, `total_price`, `order_date`, `
 
 CREATE TABLE `order_caps` (
   `id_order_caps` int NOT NULL,
-  `id_order` int NOT NULL,
-  `id_cap` int DEFAULT NULL,
-  `quantity` int DEFAULT NULL,
-  `unit_price` decimal(10,2) DEFAULT NULL
+  `id_order` int DEFAULT NULL,
+  `id_cap` int NOT NULL,
+  `quantity` int NOT NULL,
+  `unit_price` decimal(10,2) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb3;
 
 --
@@ -205,7 +243,45 @@ INSERT INTO `order_caps` (`id_order_caps`, `id_order`, `id_cap`, `quantity`, `un
 (32, 15, 9, 1, 35.00),
 (33, 15, 11, 1, 50.00),
 (34, 16, 8, 1, 2.00),
-(35, 16, 12, 1, 45.50);
+(35, 16, 12, 1, 45.50),
+(36, NULL, 10, 4, 0.00),
+(37, NULL, 12, 2, 0.00),
+(38, NULL, 2, 1, 1.00),
+(39, NULL, 3, 4, 55.50),
+(40, NULL, 5, 1, 43.99),
+(41, NULL, 6, 20, 75.00),
+(42, NULL, 7, 71, 40.00),
+(43, NULL, 8, 3, 2.00),
+(44, NULL, 9, 18, 35.00),
+(45, NULL, 10, 6, 0.30),
+(46, NULL, 11, 4, 50.00),
+(47, NULL, 12, 11, 45.50),
+(53, NULL, 2, 1, 1.00),
+(54, NULL, 3, 4, 55.50),
+(55, NULL, 5, 1, 43.99),
+(56, NULL, 6, 20, 75.00),
+(57, NULL, 7, 71, 40.00),
+(58, NULL, 8, 3, 2.00),
+(59, NULL, 9, 18, 35.00),
+(60, NULL, 10, 6, 0.30),
+(61, NULL, 11, 4, 50.00),
+(62, NULL, 12, 11, 45.50),
+(68, NULL, 3, 4, 55.50),
+(69, NULL, 12, 11, 45.50),
+(70, NULL, 5, 1, 43.99),
+(71, 1, 2, 10, 1.00),
+(73, 44, 10, 4, 44.05),
+(74, 45, 10, 3, 44.05),
+(75, 46, 10, 3, 44.05),
+(76, 47, 10, 3, 44.05),
+(77, 48, 10, 2, 44.05),
+(78, 49, 10, 2, 44.05),
+(79, 50, 10, 2, 44.05),
+(80, 51, 10, 3, 44.05),
+(81, 52, 10, 3, 44.05),
+(82, 53, 10, 2, 44.05),
+(83, 54, 12, 1, 45.50),
+(84, 55, 10, 2, 44.05);
 
 -- --------------------------------------------------------
 
@@ -239,7 +315,9 @@ INSERT INTO `users` (`id_user`, `username`, `email`, `password`, `actif`, `admin
 (10, 'dsgf', 'dsgf.sadf@fdg.sf', '$2y$10$AS/4rPTA4BpV.LggQEUBb.ZBE3txqQd.I9uE4yXaKM3h8Tt7u/Tw6', 1, 0),
 (11, 'Pokemon', 'poke@poke.poke', '$2y$10$.wth5YLDy51JAcHOcORLF.67QBdoo2EQRl3U7h4KZ0Yvn.ogM4PSi', 0, 0),
 (13, 'tac', 'tac.tac@tac.tac', '$2y$10$WxiCs1bKLb7VALfZTs76LOmarHOg49KQSLjPip41ltxYcEdDS5I4S', 0, 0),
-(14, 'pil', 'pil.pil@pil.pil', '$2y$10$CXBCK7Xo06JRLwfK5pj6weGl4pXlviYprtB1t7nBPU2GP0ghKLnom', 1, 0);
+(14, 'pil', 'pil.pil@pil.pil', '$2y$10$CXBCK7Xo06JRLwfK5pj6weGl4pXlviYprtB1t7nBPU2GP0ghKLnom', 1, 0),
+(15, 'User1', 'user1@gmail.com', '$2y$10$znE22fBDDoTJg6VsING91uX4Du5VB.w6SyKvdePSzU3zoq/ZAJa8W', 1, 0),
+(16, 'Yo', 'yo@yogmial.com', '$2y$10$dbR.zk1HgVuV3733EGGaReNp1dYWAUi6xhTMtj/NZxG.KBYQ9tvLy', 1, 0);
 
 --
 -- Index pour les tables déchargées
@@ -328,19 +406,19 @@ ALTER TABLE `models`
 -- AUTO_INCREMENT pour la table `orders`
 --
 ALTER TABLE `orders`
-  MODIFY `id_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
+  MODIFY `id_order` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=56;
 
 --
 -- AUTO_INCREMENT pour la table `order_caps`
 --
 ALTER TABLE `order_caps`
-  MODIFY `id_order_caps` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=36;
+  MODIFY `id_order_caps` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=85;
 
 --
 -- AUTO_INCREMENT pour la table `users`
 --
 ALTER TABLE `users`
-  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
+  MODIFY `id_user` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=17;
 
 --
 -- Contraintes pour les tables déchargées

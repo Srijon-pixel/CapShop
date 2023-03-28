@@ -12,9 +12,10 @@
 
 <body>
     <?php
-    session_start();
-    require_once './functions.php';
+    session_start();//Démarre une session
+    require_once './functions.php';//Permet d'utiliser les fonctions du fichier
 
+    //Variables
     const COL_ERROR = "red";
 
     $idDesactive = -1;
@@ -29,6 +30,7 @@
     $colEmail = "";
     $colPassword = "";
 
+    //Traitements
     if (isset($_POST['deconnexion'])) {
         session_destroy();
         header('Location: index.php');
@@ -39,7 +41,6 @@
         $idDesactive = $idUser;
         $idDesactive = intval($idDesactive);
     }
-
 
     if ($idDesactive > 0) {
         if (desactivateUser($idDesactive) == false) {
@@ -96,7 +97,6 @@
                     <li class="nav-item"><a class="nav-link" href="./product.php"> Produits </a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="./commande.php">Commande</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./panier.php">Panier</a></li>
                     <li class="nav-item"><a class="nav-link" href="./facture.php">Facture</a></li>
                 </ul>
 
@@ -113,7 +113,7 @@
                 echo "<label for=\"email\" style = color:" . $colEmail . ">Votre email : </label><br>";
                 echo "<input type=\"text\" name=\"email\" value=\"" . $user->email . "\"><br>";
                 echo "<label for=\"password\" style = color:" . $colPassword . ">Votre mot de passe : </label><br>";
-                echo "<input type=\"text\" name=\"password\" value=\"" . $user->password . "\"><br>";
+                echo "<input type=\"password\" name=\"password\" value=\"" . $user->password . "\"><br>";
             } ?>
             <input type="submit" name="changer" value="Changer" class="btn btn-primary"><br>
             <input type="submit" name="deconnexion" value="Déconnexion" class="btn btn-warning"><br>

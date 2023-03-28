@@ -63,7 +63,6 @@
                     <li class="nav-item"><a class="nav-link" href="./product.php"> Produits </a></li>
                     <li class="nav-item"><a class="nav-link" href="./profil.php">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="./commande.php">Commande</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./panier.php">Panier</a></li>
                     <li class="nav-item"><a class="nav-link" href="./facture.php">Facture</a></li>
                     <li class="nav-item"><a class="nav-link" href="./inscription.php">Inscription</a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">Connexion</a></li>
@@ -82,7 +81,7 @@
             <label for="email">Email:</label><br>
             <input type="text" name="email" value="<?php echo $email;?>"><br>
             <label for="password">Mot de passe : </label><br>
-            <input type="text" name="password" value="<?php echo $password;?>"><br>
+            <input type="password" name="password" value="<?php echo $password;?>"><br>
             <input type="submit" name="connexion" value="Se connecter" class="btn btn-primary"><br>
             <a href="./inscription.php">Pas de compte ?</a>
         </form>

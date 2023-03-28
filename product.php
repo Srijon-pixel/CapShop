@@ -65,7 +65,6 @@
                     <li class="nav-item"><a class="nav-link active" href="#"> Produits </a></li>
                     <li class="nav-item"><a class="nav-link" href="./profil.php">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="./commande.php">Commande</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./panier.php">Panier</a></li>
                     <li class="nav-item"><a class="nav-link" href="./facture.php">Facture</a></li>
                     <li class="nav-item"><a class="nav-link" href="./inscription.php">Inscription</a></li>
                     <li class="nav-item"><a class="nav-link" href="./login.php">Connexion</a></li>

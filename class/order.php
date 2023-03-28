@@ -1,16 +1,17 @@
 <?php
 
 /**
- * Classe container budget
+ * Classe container order
  */
 class EOrder
 {
 
     /**
-     * Constructeur permettant de créer un nouveau budget
-     * @param integer $InIdBudget L'identifiant du budget
-     * @param string $InNom le nom du budget
-     * @param integer $InMontant le montant du budget
+     * Constructeur permettant de créer une nouvelle commande
+     * @param integer $InIdOrder L'identifiant de la commande
+     * @param bool $InIsConfirmed Indique si la commande a été confirmé ou non par l'utilisateur
+     * @param string $InOrderDate Le jour où la commande a été effectué
+     * @param integer $InIdUser L'identifiant de l'utilisateur
      */
     public function __construct($InIdOrder, $InIsConfirmed, $InOrderDate, $InIdUser)
     {
@@ -24,21 +25,20 @@ class EOrder
 
 
     /**
-     * @var integer L'identifiant du budget
+     * @var integer L'identifiant de la commande
      */
     public $id_order;
     /**
-     * @var string nom du budget
+     * @var bool Indique si la commande a été confirmé ou non par l'utilisateur
      */
     public $is_confirmed;
     /**
-     * @var double montant de la transaction
+     * @var string jour où la commande a été effectué
      */
     public $order_date;
 
     /**
-     * @var double montant de la transaction
+     * @var integer identifiant de l'utilisateur
      */
     public $id_user;
 }
-?>

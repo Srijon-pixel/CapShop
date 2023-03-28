@@ -22,10 +22,12 @@
     $username = "";
     $email = "";
     $password = "";
+    $cpassword = "";
 
     $colUsername = "";
     $colEmail = "";
     $colPassword = "";
+    $colCPassword = "";
 
     if (isset($_POST['inscription'])) {
 
@@ -40,11 +42,13 @@
         }
 
         $password = filter_input(INPUT_POST, 'password');
-        if (CheckPasswordSyntax($password) == false) {
+        $cpassword = filter_input(INPUT_POST, 'cpassword');
+        if (CheckPasswordSyntax($password) == false || $password !== $cpassword) {
             $colPassword = COL_ERROR;
+            $colCPassword = COL_ERROR;
         }
 
-        if ($colNomModel != COL_ERROR && $colNomMarque != COL_ERROR && $colDescription != COL_ERROR) {
+        if ($colUsername != COL_ERROR && $colEmail != COL_ERROR && $colPassword != COL_ERROR && $colCPassword != COL_ERROR) {
             if (addUser($username, $email, $password)) {
                 header('Location: login.php');
                 exit;
@@ -67,7 +71,6 @@
                     <li class="nav-item"><a class="nav-link" href="./product.php"> Produits </a></li>
                     <li class="nav-item"><a class="nav-link" href="./profil.php">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="./commande.php">Commande</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./panier.php">Panier</a></li>
                     <li class="nav-item"><a class="nav-link" href="./facture.php">Facture</a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">Inscription</a></li>
                     <li class="nav-item"><a class="nav-link" href="./login.php">Connexion</a></li>
@@ -84,7 +87,9 @@
             <label for="email" style="color:<?php echo $colEmail; ?>">Email:</label><br>
             <input type="text" name="email" value="<?php echo $email;?>"><br>
             <label for="password" style="color:<?php echo $colPassword; ?>" placeholder="Minimum une majuscule, une minuscule, un chiffre, un symbole et 8 caractères">Mot de passe : </label><br>
-            <input type="text" name="password" value="<?php echo $password;?>"><br>
+            <input type="password" name="password" value="<?php echo $password;?>"><br>
+            <label for="cpassword" style="color:<?php echo $colCPassword; ?>" placeholder="Minimum une majuscule, une minuscule, un chiffre, un symbole et 8 caractères">Confirmation du mot de passe : </label><br>
+            <input type="password" name="cpassword" value="<?php echo $cpassword;?>"><br>
             <input type="submit" name="inscription" value="S'inscrire" class="btn btn-primary">
         </form>
         <?php

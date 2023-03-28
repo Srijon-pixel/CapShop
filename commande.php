@@ -32,25 +32,23 @@
 
     //Test si les données des champs seront modifiés dans la BD ou pas
     if (isset($_POST['add'])) {
-        $commandIsValid = false;
-        $idOrder = addOrder($idUser);
+        $dateCommande = date("Y-m-d");
+
+        $idOrder = addOrder($dateCommande, $idUser);
         if (isset($_POST[CAP]) || is_array($_POST[CAP])) {
             foreach ($_POST[CAP] as $idCap => $cap) {
 
                 $capQuantity = filter_var($cap[QUANTITY], FILTER_SANITIZE_NUMBER_INT);
                 if ($capQuantity > 0) {
                     if (addOrderCaps(intval($idOrder), $idCap, intval($capQuantity))) {
-                        $commandIsValid = true;
-                    }
-                    if ($commandIsValid) {
-                        header('Location: panier.php');
+                        $_SESSION["idOrder"] = $idOrder;
+                        header('Location: facture.php');
                         exit;
                     } else {
                         echo '<script>alert("Pas possible il vous manque des valeurs ou des valeurs sont fausses")</script>';
                     }
                 }
             }
-          
         }
     }
 
@@ -68,7 +66,6 @@
                     <li class="nav-item"><a class="nav-link" href="./product.php"> Produits </a></li>
                     <li class="nav-item"><a class="nav-link" href="./profil.php">Profile</a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">Commande</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./panier.php">Panier</a></li>
                     <li class="nav-item"><a class="nav-link" href="./facture.php">Facture</a></li>
                     <li class="nav-item"><a class="nav-link" href="./inscription.php">Inscription</a></li>
                     <li class="nav-item"><a class="nav-link" href="./login.php">Connexion</a></li>
@@ -99,9 +96,7 @@
                     echo "<p style='color: red'>Rupture de stock</p>";
                 }
                 echo "<input type=\"number\" max=\"$cap->quantity\" min=0 value = 0 name=\"" . CAP . "[" . $cap->id_cap . "][" . QUANTITY . "]\" ><br>";
-                echo "<p>";
                 echo "<p>CHF $cap->price</p>";
-                echo '</p>';
                 echo '';
                 echo "</div>";
                 echo "</div>";

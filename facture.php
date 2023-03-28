@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="./css/base.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <title>Facture</title>
+    <title>Panier</title>
 </head>
 
 <body>
@@ -16,6 +16,28 @@
     session_start();
     require_once './functions.php';
 
+    $idOrder = $_SESSION['idOrder'];
+    $idUser = $_SESSION['idUser'];
+    $quantity = 0;
+    $price = 0.00;
+    $nomModel = "";
+    $nomMarque = "";
+    $records = getDataOrderCapsById(intval($idOrder));
+
+    if ($records === false) {
+        echo "Les commandes ne peuvent être affichées. Une erreur s'est produite.";
+        exit;
+    }
+    foreach ($records as $caps) {
+        $quantity = $caps->quantity;
+        $price = $caps->unit_price;
+    }
+    if (isset($_POST['confirm'])) {
+        if (ConfirmOrder($idOrder)) {
+            header('Location: product.php');
+            exit;
+        }
+    }
     ?>
     <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
@@ -28,19 +50,32 @@
                     <li class="nav-item"><a class="nav-link" href="./product.php"> Produits </a></li>
                     <li class="nav-item"><a class="nav-link" href="./profil.php">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="./commande.php">Commande</a></li>
-                    <li class="nav-item"><a class="nav-link" href="./panier.php">Panier</a></li>
                     <li class="nav-item"><a class="nav-link active" href="#">Facture</a></li>
                     <li class="nav-item"><a class="nav-link" href="./inscription.php">Inscription</a></li>
                     <li class="nav-item"><a class="nav-link" href="./login.php">Connexion</a></li>
-
-
                 </ul>
             </div>
         </nav>
     </header>
     <main>
+        <?php
 
- 
+        
+            echo "<div class=\"card\">";
+            echo "<div class=\"container\">";
+            echo "<img src=\"./img/cap_default.jpg\" alt=\"cap_default\" style=\"width:100%\">";
+            echo "<h4><b>";
+            echo "</b></h4>";
+            echo "<p>Quantité:" . $quantity . "</p>";
+            echo "<p>". $price . " .-</p>";
+            echo "</div>";
+            echo "</div>";
+        
+        ?>
+        <form action="#" method="post">
+            <input type="submit" name="confirm" value="Confirmer la commande" class="btn btn-primary"><br>
+        </form>
+
     </main>
     <footer>
         &copy;Fait par Mofassel Haque Srijon Rahman <br>
