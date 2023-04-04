@@ -1,5 +1,10 @@
 <?php
-
+/**
+ * Auteur: Srijon Rahman
+ * Date: 04.04.2023
+ * Projet: Faire un site de vente de casquette en ligne
+ * Détail: Fichier comportant toutes les fonctions pour gérer les commandes
+ */
 require_once './db/database.php';
 require_once './class/order.php';
 require_once './class/order_caps.php';

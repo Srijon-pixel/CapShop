@@ -1,16 +1,16 @@
 <?php
 
 /**
- * Classe container favori
+ * Classe container favorite
  */
 class EFavorite
 {
 
     /**
      * Constructeur permettant de créer une nouvelle casquette avec les valeur en paramètres :
-     * @param integer $InIdCap L'identifiant de la casquette
-     * @param integer $InIdModel L'identifiant du modèle de la casquette
-     * @param double $InPrice Le prix de la casquette
+     * @param integer $InIdFavorite L'identifiant du modèle de la casquette en favori
+     * @param integer $InIdUser L'identifiant de l'utilisateur
+     * @param double $InIdCap L'identifiant de la casquette
      */
     public function __construct($InIdFavorite, $InIdUser, $InIdCap)
     {
@@ -24,17 +24,17 @@ class EFavorite
 
 
     /**
-     * @var integer identifiant de la casquette
+     * @var integer identifiant du modèle de la casquette en favori
      */
     public $id_favorite;
 
     /**
-     * @var integer identifiant du modèle de la casquette
+     * @var integer identifiant de l'utilisateur
      */
     public $id_user;
 
     /**
-     * @var double montant de la casquette
+     * @var integer identifiant de la casquette
      */
     public $id_cap;
 
