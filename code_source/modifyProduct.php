@@ -8,14 +8,19 @@
     <link rel="stylesheet" href="./css/base.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <title>Ajouter une casquette</title>
+    <title>Modifier la casquette</title>
 </head>
 
 <body>
     <?php
-    session_start();
-    require_once './functions.php';
 
+    require_once './functions/function_cap.php';
+    require_once './functions/function_session.php'; //Permet d'utiliser les fonctions du fichier
+    if (!StartSession()) {
+        // Pas de session, donc redirection à l'acceuil
+        header('Location: /index.php');
+        exit;
+    }
     //variables
     const COL_ERROR = "red";
 
@@ -31,9 +36,29 @@
     $colDescription = "";
     $colQuantity = "";
 
+    //récupère l'idModify de la page index.php
+    $idCap = $_SESSION['idCap'];
+
+
+
+    $client = GetUserFromSession();
+
+    if ($client === false) {
+        // Pas connecté, donc redirection à la page de connection
+        header('Location: login.php');
+        exit;
+    }
+
+    $clientCap = GetCapFromSession();
+
+    if ($clientCap === false) {
+        // Pas connecté, donc redirection à la page de connection
+        header('Location: product.php');
+        exit;
+    }
 
     //Test si les données des champs seront modifiés dans la BD ou pas
-    if (isset($_POST['add'])) {
+    if (isset($_POST['update'])) {
 
         $nomModel = filter_input(INPUT_POST, 'nomModel');
         if ($nomModel == false) {
@@ -57,8 +82,8 @@
             $colQuantity = COL_ERROR;
         }
         if ($colNomModel != COL_ERROR && $colNomMarque != COL_ERROR && $colPrice != COL_ERROR && $colDescription != COL_ERROR && $colQuantity != COL_ERROR) {
-            if (addCap($nomModel, $nomMarque, $price, $description, intval($quantity))) {
-                header('Location: index.php');
+            if (modifyCap($idCap, $nomModel, $nomMarque, $price, $description, intval($quantity))) {
+                header('Location: product.php');
                 exit;
             }
         } else {
@@ -66,10 +91,14 @@
         }
     }
 
- 
+    $records = getCapById($idCap);
+    if ($records === false) {
+        echo '<script>alert("Les casquettes ne peuvent être affichées. Une erreur s\'est produite.")</script>';
+        exit;
+    }
 
     ?>
-     <header>
+    <header>
         <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
             <div class="container-fluid">
                 <ul class="navbar-nav">
@@ -78,8 +107,8 @@
                         </a></li>
                     <li class="nav-item"><a class="nav-link" href="./index.php">Accueil</a></li>
                     <li class="nav-item"><a class="nav-link" href="./product.php"> Produits </a></li>
-                    <li class="nav-item"><a class="nav-link" href="./commande.php">Commande</a></li>
                     <li class="nav-item"><a class="nav-link" href="./profil.php">Profile</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./commande.php">Commande</a></li>
                     <li class="nav-item"><a class="nav-link" href="./facture.php">Facture</a></li>
                     <li class="nav-item"><a class="nav-link" href="./inscription.php">Inscription</a></li>
                     <li class="nav-item"><a class="nav-link" href="./login.php">Connexion</a></li>
@@ -89,51 +118,30 @@
     </header>
     <main>
         <form action="#" method="post">
-            
+
+            <?php foreach ($records as $cap) {
+                echo <<<EOF
             <div class="container">
                 <div class="row">
                     <div class="col shadow p-3 mb-5 bg-light rounded">
-                        <p>
-                            <label for="nomModel" style="color:<?php echo $colNomModel; ?>">Nom du modèle: </label><br>
-                            <input type="text" name="nomModel" value="<?php echo $nomModel; ?>">
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col shadow p-3 mb-5 bg-light rounded">
-                    <p>
-                            <label for="nomMarque" style="color:<?php echo $colNomMarque; ?>">Nom du marque: </label><br>
-                            <input type="text" name="nomMarque" value="<?php echo $nomMarque; ?>">
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col shadow p-3 mb-5 bg-light rounded">
-                        <p>
-                            <label for="price" style="color:<?php echo $colPrice; ?>">Prix: </label><br>
-                            <input type="number" name="price" step="0.05" value="<?php echo $price; ?>">
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col shadow p-3 mb-5 bg-light rounded">
-                        <p>
-                            <label for="description" style="color:<?php echo $colDescription; ?>">Description: </label><br>
-                            <input type="text" name="description" step="0.05" value="<?php echo $description; ?>">
-                        </p>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col shadow p-3 mb-5 bg-light rounded">
-                        <p>
-                            <label for="quantity" style="color:<?php echo $colQuantity; ?>">Quantité: </label><br>
-                            <input type="number" name="quantity" value="<?php echo $quantity; ?>">
-                        </p>
-                    </div>
-                </div>
-                <p>
-                    <input type="submit" name="add" value="Ajouter la casquette" class="btn btn-primary">
-                </p>
+                        <label for="nomModel" style="color:$colNomModel;">Nom du modèle: </label><br>
+                            <input type="text" name="nomModel" value="$cap->nomModel "></div></div>
+                <div class="row"><div class="col shadow p-3 mb-5 bg-light rounded">
+                            <label for="nomMarque" style="color: $colNomMarque">Nom du marque: </label><br>
+                            <input type="text" name="nomMarque" value="$cap->nomMarque"></div></div>
+                <div class="row"><div class="col shadow p-3 mb-5 bg-light rounded">
+                            <label for="price" style="color: $colPrice">Prix: </label><br>
+                            <input type="number" name="price" min="0" step="0.05" value="$cap->price"></div></div>
+                <div class="row"><div class="col shadow p-3 mb-5 bg-light rounded">
+                            <label for="description" style="color:$colDescription">Description: </label><br>
+                            <input type="text" name="description" value="$cap->description"></div></div>
+                <div class="row"><div class="col shadow p-3 mb-5 bg-light rounded">
+                            <label for="quantity" style="color: $colQuantity">Quantité: </label><br>
+                            <input type="number" name="quantity" min="0" value="$cap->quantity"></div></div>
+                <input type="submit" name="update" value="Modifer la casquette" class="btn btn-primary">
+            EOF;
+            }
+            ?>
         </form>
     </main>
     <footer>

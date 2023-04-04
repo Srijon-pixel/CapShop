@@ -13,12 +13,14 @@
 
 <body>
     <?php
-    session_start();
-    require_once './functions.php';
+  
+    require_once './functions/function_order.php';
+    require_once './functions/function_cap.php';
+    require_once './functions/function_session.php'; //Permet d'utiliser les fonctions du fichier
 
-    $records = getAllCaps();
-    if ($records === false) {
-        echo "Les casquettes ne peuvent être affichées. Une erreur s'est produite.";
+    if (!StartSession()) {
+        // Pas de session, donc redirection à l'acceuil
+        header('Location: /index.php');
         exit;
     }
 
@@ -28,7 +30,13 @@
     define('CAP', 'cap');
     define('QUANTITY', 'quantity');
 
+    $client = GetUserFromSession();
 
+    if ($client === false) {
+        // Pas connecté, donc redirection à la page de connection
+        header('Location: login.php');
+        exit;
+    }
 
     //Test si les données des champs seront modifiés dans la BD ou pas
     if (isset($_POST['add'])) {
@@ -52,7 +60,11 @@
         }
     }
 
-
+    $records = getAllCaps();
+    if ($records === false) {
+        echo "Les casquettes ne peuvent être affichées. Une erreur s'est produite.";
+        exit;
+    }
 
     ?>
     <header>
@@ -76,6 +88,8 @@
     <main>
 
         <form action="#" method="post">
+        <input type="submit" name="add" value="Ajouter au panier" class="btn btn-primary"><br>
+
             <?php
 
             foreach ($records as $cap) {
@@ -102,7 +116,6 @@
                 echo "</div>";
             }
             ?>
-            <input type="submit" name="add" value="Ajouter au panier" class="btn btn-primary"><br>
         </form>
     </main>
     <footer>

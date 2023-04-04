@@ -13,9 +13,14 @@
 
 <body>
     <?php
-    session_start();
-    require_once './functions.php';
 
+    require_once './functions/function_order.php';
+    require_once './functions/function_session.php';
+    if (!StartSession()) {
+        // Pas de session, donc redirection à l'acceuil
+        header('Location: /index.php');
+        exit;
+    }
     $idOrder = $_SESSION['idOrder'];
     $idUser = $_SESSION['idUser'];
     $quantity = 0;
@@ -23,6 +28,24 @@
     $nomModel = "";
     $nomMarque = "";
     $records = getDataOrderCapsById(intval($idOrder));
+
+
+
+    $client = GetUserFromSession();
+
+    if ($client === false) {
+        // Pas connecté, donc redirection à la page de connection
+        header('Location: login.php');
+        exit;
+    }
+
+    $clienOrder = GetOrderFromSession();
+
+    if ($clienOrder === false) {
+        // Pas de commande, donc redirection à la page de commande
+        header('Location: commande.php');
+        exit;
+    }
 
     if ($records === false) {
         echo "Les commandes ne peuvent être affichées. Une erreur s'est produite.";
@@ -60,17 +83,17 @@
     <main>
         <?php
 
-        
-            echo "<div class=\"card\">";
-            echo "<div class=\"container\">";
-            echo "<img src=\"./img/cap_default.jpg\" alt=\"cap_default\" style=\"width:100%\">";
-            echo "<h4><b>";
-            echo "</b></h4>";
-            echo "<p>Quantité:" . $quantity . "</p>";
-            echo "<p>". $price . " .-</p>";
-            echo "</div>";
-            echo "</div>";
-        
+
+        echo "<div class=\"card\">";
+        echo "<div class=\"container\">";
+        echo "<img src=\"./img/cap_default.jpg\" alt=\"cap_default\" style=\"width:100%\">";
+        echo "<h4><b>";
+        echo "</b></h4>";
+        echo "<p>Quantité: " . $quantity . "</p>";
+        echo "<p>" . $price . " .-</p>";
+        echo "</div>";
+        echo "</div>";
+
         ?>
         <form action="#" method="post">
             <input type="submit" name="confirm" value="Confirmer la commande" class="btn btn-primary"><br>

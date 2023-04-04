@@ -8,14 +8,21 @@
     <link rel="stylesheet" href="./css/base.css">
 
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.2.1/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-iYQeCzEYFbKjA/T2uDLTpkwGzCiq6soy8tYaI1GyVh/UjpbCx/TYkiZhlZB6+fzT" crossorigin="anonymous">
-    <title>Modifier la casquette</title>
+    <title>Ajouter une casquette</title>
 </head>
 
 <body>
     <?php
-    session_start();
-    require_once './functions.php';
+    
+    require_once './functions/function_cap.php';
+    require_once './functions/function_session.php';//Permet d'utiliser les fonctions du fichier
 
+
+    if (!StartSession()) {
+        // Pas de session, donc redirection à l'acceuil
+        header('Location: /index.php');
+        exit;
+    }
     //variables
     const COL_ERROR = "red";
 
@@ -31,11 +38,19 @@
     $colDescription = "";
     $colQuantity = "";
 
-    //récupère l'idModify de la page index.php
-    $idModify = $_SESSION['idModifyCap'];
+
+    $client = GetUserFromSession();
+    
+    if ($client === false) {
+        // Pas connecté, donc redirection à la page de connection
+        header('Location: login.php');
+        exit;
+    }
+
+    
 
     //Test si les données des champs seront modifiés dans la BD ou pas
-    if (isset($_POST['update'])) {
+    if (isset($_POST['addCap'])) {
 
         $nomModel = filter_input(INPUT_POST, 'nomModel');
         if ($nomModel == false) {
@@ -59,9 +74,11 @@
             $colQuantity = COL_ERROR;
         }
         if ($colNomModel != COL_ERROR && $colNomMarque != COL_ERROR && $colPrice != COL_ERROR && $colDescription != COL_ERROR && $colQuantity != COL_ERROR) {
-            if (modifyCap($idModify, $nomModel, $nomMarque, $price, $description, intval($quantity))) {
+            if (addCap($nomModel, $nomMarque, $price, $description, intval($quantity))) {
                 header('Location: index.php');
                 exit;
+            }else{
+            echo '<script>alert("Insertion impossible, il semblerait qu\il il vous manque des valeurs")</script>';
             }
         } else {
             echo '<script>alert("Pas possible il vous manque des valeurs ou des valeurs sont fausses")</script>';
@@ -80,8 +97,8 @@
                         </a></li>
                     <li class="nav-item"><a class="nav-link" href="./index.php">Accueil</a></li>
                     <li class="nav-item"><a class="nav-link" href="./product.php"> Produits </a></li>
-                    <li class="nav-item"><a class="nav-link" href="./profil.php">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="./commande.php">Commande</a></li>
+                    <li class="nav-item"><a class="nav-link" href="./profil.php">Profile</a></li>
                     <li class="nav-item"><a class="nav-link" href="./facture.php">Facture</a></li>
                     <li class="nav-item"><a class="nav-link" href="./inscription.php">Inscription</a></li>
                     <li class="nav-item"><a class="nav-link" href="./login.php">Connexion</a></li>
@@ -134,7 +151,7 @@
                     </div>
                 </div>
                 <p>
-                    <input type="submit" name="update" value="Modifer la casquette" class="btn btn-primary">
+                    <input type="submit" name="addCap" value="Ajouter la casquette" class="btn btn-primary">
                 </p>
         </form>
     </main>
