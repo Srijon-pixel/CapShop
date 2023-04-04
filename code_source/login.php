@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!--
+    Auteur: Srijon Rahman
+    Date: 04.04.2023
+    Projet: Faire un site de vente de casquette en ligne
+    Détail: Page de connexion pour l'utilisateur
+-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
@@ -26,9 +31,6 @@
     $colPassword = "";
 
     if (isset($_POST['connexion'])) {
-
-       
-
         $email = filter_input(INPUT_POST, 'email', FILTER_SANITIZE_EMAIL);
         if ($email == false) {
             $colEmail = COL_ERROR;

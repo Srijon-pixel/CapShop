@@ -6,18 +6,13 @@ require_once './functions/function_order.php';
 require_once './functions/function_cap.php';
 
 /**
- * @var string la clé utilisé pour identifier l'utilisateur par sa session
+ * @var string les clés utilisé pour identifier l'utilisateur par sa session
  */
 define('SESSION_KEY_ID_USER', 'idUser');
 define('SESSION_KEY_ID_ORDER', 'idOrder');
 define('SESSION_KEY_ID_CAP', 'idCap');
 
-/**
- * Recherche l'utilisateur dans la session
- * @author Arthur Jegge
- *
- * @return EUser|false  l'utilisateur si identifié, autrement false
- */
+
 function GetUserFromSession()
 {
     if (!StartSession()) {
@@ -51,12 +46,7 @@ function GetCapFromSession()
     return false;
 }
 
-/**
- * Démarre une session
- * @author Arthur Jegge
- * 
- * @return bool true si la session est démarrée, autrement false
- */
+
 function StartSession()
 {
     if (session_status() === PHP_SESSION_ACTIVE) {
@@ -69,12 +59,7 @@ function StartSession()
     }
 }
 
-/**
- * Détruit une session
- * @author Arthur Jegge
- *
- * @return void
- */
+
 function DestroySession()
 {
     StartSession();

@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!--
+    Auteur: Srijon Rahman
+    Date: 04.04.2023
+    Projet: Faire un site de vente de casquette en ligne
+    Détail: Page pour ajouter une casquette
+-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">

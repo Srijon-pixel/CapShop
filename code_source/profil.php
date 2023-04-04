@@ -1,6 +1,11 @@
 <!DOCTYPE html>
 <html lang="en">
-
+<!--
+    Auteur: Srijon Rahman
+    Date: 04.04.2023
+    Projet: Faire un site de vente de casquette en ligne
+    Détail: Page affichant les données de l'utilisateur, ce dernier pourra les modifiers, se déconnecter ou supprimer son compte
+-->
 <head>
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
